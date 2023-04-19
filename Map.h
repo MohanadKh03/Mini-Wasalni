@@ -1,31 +1,7 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <map>
 using namespace std;
-
-class Algorithm{
-public:
-    void run();
-    void shortestPath();
-};
-
-class DFS : public Algorithm{
-public:
-    void run(){
-
-    }
-    void shortestPath(){
-
-    }
-};
-
-class BFS : public Algorithm{
-    public:
-    void run(){
-
-    }
-    void shortestPath(){
-
-    }
-};
 
 class Map{
         class Node {
@@ -47,7 +23,7 @@ class Map{
         //graph.push_back(node)
         //
         map<string,Node>graph;
-        map<string,vector<Node*>>graph;
+        //map<string,vector<Node*>>graph;
 public: 
     Map();
 
@@ -55,7 +31,7 @@ public:
     void deleteCity();
     void addEdge();
     void deleteEdge();
-    //void deleteMap();
+    void deleteMap();
     void displayMap();
 
     ~Map();

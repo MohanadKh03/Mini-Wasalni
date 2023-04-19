@@ -1,29 +1,35 @@
-#include "App.h"
+#include "Application.h"
+#include "Algorithm.h"
+//#include "BFS.cpp"
+#include "DFS.cpp"
 
-
-void Application::algorithmTypes()
+Application::Application()
 {
-    algorithms[0] = new BFS();
-    algorithms[1] = new DFS();
-    //algorithms[2] = new Dijkstra();
-    //algorithms[3] = new Floyd();
-    int algorithm;
-    while(true){
-        cout << "1.BFS\n";
-        cout << "2.DFS\n";
-        cout << "3.Dijkstra\n";
-        cout << "4.Floyd\n";
-        cout << "4.back\n";
-        cin >> algorithm;
-        if(algorithm < 1 || algorithm > 3)
-            cout << "Enter a valid number(1:4)\n";
-        else if(algorithm == 4)
-            break;
-        else
-            algorithms[algorithm-1]->run();
-    }
+    cout << "Application constructor\n";
+    algos.push_back(new BFS());
+    algos.push_back(new DFS());
 }
 
+void Application::start()
+{
+    int startChoice;
+    while(true){
+        cout << "Mini-Wasalny\n";
+        cout << "------------------------------------------\n";
+        cout << "1.Navigate Map\n";
+        cout << "2.Edit Map\n";
+        cout << "3.exit\n";
+        cin >> startChoice;
+        if(startChoice == 1)
+            navigateMenu();
+        else if(startChoice == 2)
+            editMenu();
+        else if(startChoice == 3)
+            break;
+        else
+            cout << "Enter a valid number(1:3)\n";
+    }
+}
 
 void Application::navigateMenu()
 {
@@ -68,29 +74,25 @@ void Application::editMenu()
             cout << "Enter a valid number(1:6)\n";
     }
 }
-
-Application::Application()
-{
-    
+void Application::algorithmTypes(){
+    int algorithm;
+    while(true){
+        cout << "1.BFS\n";
+        cout << "2.DFS\n";
+        cout << "3.Dijkstra\n";
+        cout << "4.Floyd\n";
+        cout << "5.back\n";
+        cin >> algorithm;
+        if(algorithm == 5)
+            break;
+        else if(algorithm < 1 || algorithm > 4)
+            cout << "Enter a valid number(1:5)\n";
+        else
+            algos[algorithm-1]->run();
+    }
 }
 
-void Application::start()
+Application::~Application()
 {
-    int startChoice;
-    while(true){
-        cout << "Mini-Wasalny\n";
-        cout << "------------------------------------------\n";
-        cout << "1.Navigate Map\n";
-        cout << "2.Edit Map\n";
-        cout << "3.exit\n";
-        cin >> startChoice;
-        if(startChoice == 1)
-            navigateMenu();
-        else if(startChoice == 2)
-            editMenu();
-        else if(startChoice == 3)
-            break;
-        else
-            cout << "Enter a valid number(1:3)\n";
-    }
+    
 }
