@@ -19,6 +19,7 @@ class Map{
             this->point.x = x;
             this->point.y = y;
         }
+        int id;
         string name;
         map<string, int> edges; // {to , distance }
     };

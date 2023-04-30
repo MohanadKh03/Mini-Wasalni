@@ -5,14 +5,24 @@ Map::Map(){
     ifstream edgesFile("edges.txt");
     string name, neighborName;
     int x, y, size, weight;
-    bool isDirected;
     while (citiesFile >> name >> x >> y) {
         Node *newCity = new Node(name, x, y);
         graph[name] = newCity;
+
+        int id = tmp.axisToId(x, y, limitY);
+        newCity->id = id;
+        
+        convertedGraph[id];
     }
     while (edgesFile >> name >> size) {
+        int id = tmp.axisToId(graph[name]->point.x, graph[name]->point.y, limitY);
         for (int i = 0; i < size; ++i) {
-            edgesFile >> neighborName >> weight >> isDirected;
+            edgesFile >> neighborName >> weight;
+            int neighourId = tmp.axisToId(graph[neighborName]->point.x, graph[neighborName]->point.y, limitY);
+
+            convertedGraph[id].insert(neighourId);
+            convertedGraph[neighourId].insert(id);
+
             graph[name]->edges[neighborName] = weight;
             graph[neighborName]->edges[name] = weight;
         }
@@ -33,6 +43,8 @@ void Map::addCity()
     graph[city] = newNode;
 
     int id = tmp.axisToId(graph[city]->point.x, graph[city]->point.y, limitY);
+    newNode->id = id;
+
     convertedGraph[id];
         
 }
