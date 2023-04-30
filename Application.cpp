@@ -3,10 +3,6 @@
 Application::Application()
 {
     cout << "Application constructor\n";
-    algos.push_back(new BFS());
-    algos.push_back(new DFS());
-    algos.push_back(new Dijkstra());
-    algos.push_back(new Floyd());
 }
 
 void Application::start()
@@ -40,7 +36,7 @@ void Application::navigateMenu()
         cout << "Enter source and destination cities: ";
         cin >> city1 >> city2;
 
-        algorithmTypes();
+        algorithmTypes(city1,city2);
         cout << "1.Choose another two cities\n";
         cout << "2.back\n";
         cin >> choice;
@@ -73,7 +69,7 @@ void Application::editMenu()
             cout << "Enter a valid number(1:6)\n";
     }
 }
-void Application::algorithmTypes(){
+void Application::algorithmTypes(string city1,string city2){
     int algorithm;
     while(true){
         cout << "1.BFS\n";
@@ -88,7 +84,28 @@ void Application::algorithmTypes(){
             cout << "Enter a valid number(1:5)\n";
         else{
             std::map<int,set<int>>convertedGraph = map.getConvertedGraph();
-            algos[algorithm-1]->run(convertedGraph);
+            auto graph = map.getGraph();
+
+            Point p1,p2;
+            p1.x = graph[city1]->point.x;
+            p1.y = graph[city1]->point.y;
+
+            p2.x = graph[city2]->point.x;
+            p2.y = graph[city2]->point.y;
+
+            switch(algorithm){
+                case 1:
+                    algo = new BFS(p1,p2);
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+            }
+            algo->run(convertedGraph);
+            algo->getPath(convertedGraph);
         }
     }
 }

@@ -9,6 +9,8 @@
     "unordered_set": "cpp",
     "vector": "cpp",
     "bitset": "cpp",
-    "set": "cpp"
+    "set": "cpp",
+    "map": "cpp",
+    "system_error": "cpp"
   }
 }

@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 #include <vector>
 #include <map>
@@ -5,16 +7,10 @@
 #include <cmath>
 #include <fstream>
 using namespace std;
-
-struct Point{
-    int x,y;
-    bool compare(Point &tmp) {
-        return (tmp.x == this->x && tmp.y == this->y);
-    }
-};
+#include "/home/mohanadkhaled/Mini-Wasalni/Mini-Wasalni/Resources/Point.h"
+#include "/home/mohanadkhaled/Mini-Wasalni/Mini-Wasalni/Resources/NodeConverter.h"
 
 class Map{
-    const int limitY = 15;
 
     class Node {
     public:
@@ -31,20 +27,7 @@ class Map{
     map<string,Node*>graph;
     map<int,set<int>>convertedGraph;
 
-    class NodeConverter {
-    public:
-        Point idToAxis(int id,int m) {
-            int x = id / m + (id % m != 0);
-            int y = (id % m);
-            if (id % m == 0)y += m;
-            return { x,y };
-        }
-        //
-        int axisToId(int x, int y,int m) {
-            return(x - 1) * m + y;
-        }
-        //
-    }tmp;
+    NodeConverter tmp;
 public: 
     Map();
 
@@ -58,6 +41,8 @@ public:
     map<int,set<int>> getConvertedGraph(){
         return convertedGraph;
     }
-
+    map<string,Node*> getGraph(){
+        return graph;
+    }
     ~Map();
 };
