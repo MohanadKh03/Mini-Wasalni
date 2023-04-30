@@ -6,14 +6,19 @@
 #include <fstream>
 using namespace std;
 
+struct Point{
+    int x,y;
+    bool compare(Point &tmp) {
+        return (tmp.x == this->x && tmp.y == this->y);
+    }
+};
+
 class Map{
     const int limitY = 15;
 
     class Node {
     public:
-        struct Point {
-            int x, y;
-        }point;
+        Point point;
         Node(string name, int x, int y) {
             this->name = name;
             this->point.x = x;
@@ -26,15 +31,9 @@ class Map{
     map<string,Node*>graph;
     map<int,set<int>>convertedGraph;
 
-    struct Axis {
-        int x, y;
-        bool compare(Axis &tmp) {
-            return (tmp.x == this->x && tmp.y == this->y);
-        }
-    };
     class NodeConverter {
     public:
-        Axis idToAxis(int id,int m) {
+        Point idToAxis(int id,int m) {
             int x = id / m + (id % m != 0);
             int y = (id % m);
             if (id % m == 0)y += m;
@@ -55,6 +54,10 @@ public:
     void deleteEdge();
     void deleteMap();
     void displayMap();
+
+    map<int,set<int>> getConvertedGraph(){
+        return convertedGraph;
+    }
 
     ~Map();
 };

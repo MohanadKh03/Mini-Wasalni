@@ -1,13 +1,12 @@
 #include "Application.h"
-#include "Algorithm.h"
-//#include "BFS.cpp"
-#include "DFS.cpp"
 
 Application::Application()
 {
     cout << "Application constructor\n";
     algos.push_back(new BFS());
     algos.push_back(new DFS());
+    algos.push_back(new Dijkstra());
+    algos.push_back(new Floyd());
 }
 
 void Application::start()
@@ -87,8 +86,10 @@ void Application::algorithmTypes(){
             break;
         else if(algorithm < 1 || algorithm > 4)
             cout << "Enter a valid number(1:5)\n";
-        else
-            algos[algorithm-1]->run();
+        else{
+            std::map<int,set<int>>convertedGraph = map.getConvertedGraph();
+            algos[algorithm-1]->run(convertedGraph);
+        }
     }
 }
 

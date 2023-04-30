@@ -2,8 +2,11 @@
 
 #include <iostream>
 #include <vector>
-#include "Algorithm.h"
-#include "BFS.cpp"
+#include "/home/mohanadkhaled/Mini-Wasalni/Mini-Wasalni/Algos/Algorithm.h"
+#include "Algos/BFS/BFS.cpp"
+#include "Algos/DFS/DFS.cpp"
+#include "Algos/Dijkstra/Dijkstra.cpp"
+#include "Algos/Floyd/Floyd.cpp"
 #include "Map.cpp"
 using namespace std;
 
