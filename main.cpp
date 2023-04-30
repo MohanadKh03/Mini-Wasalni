@@ -1,11 +1,9 @@
 #include <iostream>
-#include "App.h"
+#include "Application.cpp"
 using namespace std;
-
-
 
 int main(){
     Application app;
-    app;
+    app.start();
     return 0;
 }
