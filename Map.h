@@ -1,29 +1,50 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <set>
+#include <cmath>
+#include <fstream>
 using namespace std;
 
 class Map{
-        class Node {
-            struct Point {
-                int x, y;
-            }point;
-        public:
-            Node(string name, int x, int y) {
-                this->name = name;
-                this->point.x = x;
-                this->point.y = y;
-            }
-            string name;
-            //map<string, pair<int, bool>> edges; // {to , {distance,directed/undirected} }
-        };
-        //Node a = new Node();
-        //Node = new Node.. 
-        //Node
-        //graph.push_back(node)
+    const int limitY = 15;
+
+    class Node {
+    public:
+        struct Point {
+            int x, y;
+        }point;
+        Node(string name, int x, int y) {
+            this->name = name;
+            this->point.x = x;
+            this->point.y = y;
+        }
+        string name;
+        map<string, int> edges; // {to , distance }
+    };
+    map<string,Node*>graph;
+    map<int,set<int>>convertedGraph;
+
+    struct Axis {
+        int x, y;
+        bool compare(Axis &tmp) {
+            return (tmp.x == this->x && tmp.y == this->y);
+        }
+    };
+    class NodeConverter {
+    public:
+        Axis idToAxis(int id,int m) {
+            int x = id / m + (id % m != 0);
+            int y = (id % m);
+            if (id % m == 0)y += m;
+            return { x,y };
+        }
         //
-        map<string,Node>graph;
-        //map<string,vector<Node*>>graph;
+        int axisToId(int x, int y,int m) {
+            return(x - 1) * m + y;
+        }
+        //
+    }tmp;
 public: 
     Map();
 
