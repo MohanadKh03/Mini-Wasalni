@@ -1,8 +1,8 @@
 #include "Application.h"
 
-Application::Application() {
-    cout << "Application constructor\n";
-}
+#define oo INT32_MAX
+
+
 
 void Application::start() {
     int startChoice;
@@ -70,17 +70,19 @@ void Application::editMenu() {
 }
 
 void Application::algorithmTypes(string city1, string city2) {
-    if(city1==city2){
-        cout<<"0\n";
+    if (city1 == city2) {
+        cout << "0\n";
         return;
     }
     int algorithm;
     std::map<int, set<int>> convertedGraph = map.getConvertedGraph();
+    std::map<int, string> IdToName = map.getIdToName();
     auto graph = map.getGraph();
-    Floyd* floyd = new Floyd();
+    Floyd *floyd = new Floyd();
     floyd->build(convertedGraph);
     floyd->run(convertedGraph);
     while (true) {
+        vector<Point> path;
         cout << "1.BFS\n";
         cout << "2.DFS\n";
         cout << "3.Dijkstra\n";
@@ -90,40 +92,55 @@ void Application::algorithmTypes(string city1, string city2) {
         system("CLS");
         if (algorithm == 5)
             break;
-        else if (algorithm < 1 || algorithm > 4)
+        if (algorithm < 1 || algorithm > 4) {
             cout << "Enter a valid number(1:5)\n";
-        else {
+            continue;
+        }
+        Point p1, p2;
+        p1.x = graph[city1]->point.x;
+        p1.y = graph[city1]->point.y;
 
-            Point p1, p2;
-            p1.x = graph[city1]->point.x;
-            p1.y = graph[city1]->point.y;
+        p2.x = graph[city2]->point.x;
+        p2.y = graph[city2]->point.y;
 
-            p2.x = graph[city2]->point.x;
-            p2.y = graph[city2]->point.y;
+        switch (algorithm) {
+            case 1:
+                algo = new BFS(p1, p2);
+                algo->run(convertedGraph);
+                path = algo->getPath(convertedGraph);
+                break;
+            case 2:
+                algo = new DFS(p1, p2);
+                algo->run(convertedGraph);
+                path = algo->getPath(convertedGraph);
+                break;
+            case 3:
+                algo = new Dijkstra(p1, p2);
+                algo->run(convertedGraph);
+                path = algo->getPath(convertedGraph);
+                break;
+            case 4:
+                floyd->setPoints(p1, p2);
+                path = floyd->getPath(convertedGraph);
+                break;
+            default:
+                break;
+        }
 
-            switch (algorithm) {
-                case 1:
-                    algo = new BFS(p1, p2);
-                    break;
-                case 2:
-                    algo = new DFS(p1, p2);
-                    break;
-                case 3:
-                    algo = new Dijkstra(p1,p2);
-                    break;
-                case 4:
-                    floyd->setPoints(p1,p2);
-                    floyd->getPath(convertedGraph);
-                    break;
-            }
-           if(algorithm!=4) {
-               algo->run(convertedGraph);
-               algo->getPath(convertedGraph);
-           }
+
+        if (path.front().x == oo and path.front().y == oo) {
+            cout << "there is no path between those destinations\n";
+            continue;
+        }
+
+        cout << "path cost is : " << path.front().x << "\n";
+        for (int i = 1; i < path.size(); ++i) {
+            auto cityId = NodeConverter().axisToId(path[i].x, path[i].y, limitY);
+            cout << IdToName[cityId] << ' ';
+            cout << path[i].x << " " << path[i].y << "\n";
+
+
         }
     }
 }
 
-Application::~Application() {
-
-}

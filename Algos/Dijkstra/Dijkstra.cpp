@@ -23,14 +23,14 @@ void Dijkstra::run(map<int, set<int>> &convertedGraph) {
     }
 }
 
-void Dijkstra::getPath(map<int, set<int>> &convertedGraph) {
+vector<Point> Dijkstra::getPath(map<int, set<int>> &convertedGraph) {
     if (distance[tmp.axisToId(ds.x, ds.y, limitY)].d == 1e18) {
-        return;
+        return {{oo, oo}};
     }
-    //
-    cout << "Path: " << distance[tmp.axisToId(ds.x, ds.y, limitY)].d << "\n";
-
-    stack<Point>path;
+    vector<Point> ret;
+//    cout << "Path: " << distance[tmp.axisToId(ds.x, ds.y, limitY)].d << "\n";
+    ret.push_back({(int) distance[tmp.axisToId(ds.x, ds.y, limitY)].d, oo});
+    stack<Point> path;
     while (!(ds.compare(src))) {
         path.push(ds);
         //
@@ -40,7 +40,9 @@ void Dijkstra::getPath(map<int, set<int>> &convertedGraph) {
     //
     path.push(src);
     while (!path.empty()) {
-        cout << "( " << path.top().x<< " - " << path.top().y <<" )" << "\n";
+        ret.push_back({path.top().x, path.top().y});
+//        cout << "( " << path.top().x<< " - " << path.top().y <<" )" << "\n";
         path.pop();
     }
+    return ret;
 }

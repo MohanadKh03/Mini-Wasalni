@@ -16,13 +16,16 @@ void Floyd::run(map<int, set<int>> &convertedGraph)
         }
     }
 }
-void Floyd::getPath(map<int, set<int>> &convertedGraph)
+vector<Point> Floyd::getPath(map<int, set<int>> &convertedGraph)
 {
+    vector<Point>ret;
+
     int u = tmp.axisToId(src.x,src.y,limitY), v = tmp.axisToId(ds.x, ds.y,limitY);
     if (dp[{u, v}].d == 1e18) {
-        return;
+        return{{oo,oo}};
     }
-    cout << "Path: " << dp[{u, v}].d << "\n";
+//    cout << "Path: " << dp[{u, v}].d << "\n";
+    ret.push_back({(int)dp[{u, v}].d,oo});
     vector<ll>vv = { u };
     while (u!=v) {
         u =(int)path[{u,v}].d;
@@ -30,8 +33,10 @@ void Floyd::getPath(map<int, set<int>> &convertedGraph)
     }
     for (auto& it : vv) {
         Point currPoint = tmp.idToAxis((int)it,limitY);
-        cout << "( " << currPoint.x << " - " << currPoint.y << " )" << "\n";
+//        cout << "( " << currPoint.x << " - " << currPoint.y << " )" << "\n";
+        ret.push_back({currPoint.x,currPoint.y});
     }
+    return ret;
 }
 void Floyd::build(map<int, set<int>>& graph) {
     for (auto& i : graph) {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "C:\Users\amoha\CLionProjects\untitled5\Algos\Algorithm.h"
+#include "F:\DS MiniWaslni\Algos\algorithm.h"
 
 class BFS : public Algorithm
 {
@@ -22,5 +22,5 @@ public:
         this->ds = ds;
     }
     void run(map<int, set<int>> &convertedGraph);
-    void getPath(map<int, set<int>> &convertedGraph);
+    vector<Point> getPath(map<int, set<int>> &convertedGraph);
 };

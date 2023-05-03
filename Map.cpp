@@ -1,6 +1,6 @@
 #include "Map.h"
 
-Map::Map(){
+Map::Map() {
     ifstream citiesFile("cities.txt");
     ifstream edgesFile("edges.txt");
     string name, neighborName;
@@ -11,8 +11,9 @@ Map::Map(){
 
         int id = tmp.axisToId(x, y, limitY);
         newCity->id = id;
-        
+
         convertedGraph[id];
+        IdToName[id] = name;
     }
     while (edgesFile >> name >> size) {
         int id = tmp.axisToId(graph[name]->point.x, graph[name]->point.y, limitY);
@@ -29,8 +30,7 @@ Map::Map(){
     }
 }
 
-void Map::addCity()
-{
+void Map::addCity() {
     string city;
     int x, y;
     cout << "Enter city name , position(x,y)\n";
@@ -46,9 +46,10 @@ void Map::addCity()
     newNode->id = id;
 
     convertedGraph[id];
-        
+    IdToName[id] = city;
 }
-void Map::deleteCity(){
+
+void Map::deleteCity() {
     string city;
     cout << "Enter city \t";
     cin >> city;
@@ -63,14 +64,16 @@ void Map::deleteCity(){
 
     int id = tmp.axisToId(graph[city]->point.x, graph[city]->point.y, limitY);
     //
-    for (auto it : convertedGraph[id]) {
+    for (auto it: convertedGraph[id]) {
         convertedGraph[it].erase(id);
     }
     convertedGraph[id].clear();
     convertedGraph.erase(id);
+    IdToName.erase(id);
 
 }
-void Map::addEdge(){
+
+void Map::addEdge() {
     string city1, city2;
     bool isDirected;
     cout << "Enter city1,city2 names\n";
@@ -80,7 +83,7 @@ void Map::addEdge(){
         return;
     }
     int distance = (int) sqrt(pow((graph[city1]->point.x - graph[city2]->point.x), 2) +
-                                pow((graph[city1]->point.y - graph[city2]->point.y), 2));
+                              pow((graph[city1]->point.y - graph[city2]->point.y), 2));
     graph[city1]->edges[city2] = distance;
     graph[city2]->edges[city1] = distance;
 
@@ -92,10 +95,11 @@ void Map::addEdge(){
     convertedGraph[id1].insert(id2); //
     ///./////
     convertedGraph[id2].insert(id1); //
-    
+
 }
-void Map::deleteEdge(){
-    cout<<"Enter cities name \n";
+
+void Map::deleteEdge() {
+    cout << "Enter cities name \n";
     string city1, city2;
     cin >> city1 >> city2;
     if (!graph[city1] || !graph[city2]) {
@@ -116,7 +120,7 @@ void Map::deleteEdge(){
 
 }
 
-void Map::displayMap(){
+void Map::displayMap() {
     for (auto &node: graph) {
         cout << node.first << endl;
         for (auto &edge: graph[node.first]->edges)
@@ -124,9 +128,9 @@ void Map::displayMap(){
         cout << "------------------------------------------------------------------------------\n";
     }
     cout << "CONVERTED: \n";
-    for (auto& i : convertedGraph) {
+    for (auto &i: convertedGraph) {
         cout << "[ " << i.first << " ]: ";
-        for (auto& j : i.second) {
+        for (auto &j: i.second) {
             cout << j << ", ";
         }
         cout << "\n";
@@ -134,17 +138,16 @@ void Map::displayMap(){
     cout << "END CONVERTED: \n";
 }
 
-void Map::deleteMap()
-{
+void Map::deleteMap() {
     cout << "Map Deleted\n";
-    for(auto& node : graph){
+    for (auto &node: graph) {
         delete node.second;
     }
     //have to delete the pointers of each node first then clear
     graph.clear();
 }
 
-Map::~Map(){
+Map::~Map() {
     ofstream citiesFile("cities.txt");
     ofstream edgesFile("edges.txt");
     for (auto &city: graph) {
