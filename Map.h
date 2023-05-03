@@ -7,8 +7,8 @@
 #include <cmath>
 #include <fstream>
 using namespace std;
-#include "Resources/Point.h"
-#include "C:\Users\amoha\CLionProjects\untitled5\Resources\NodeConverter.h"
+#include "F:\DS MiniWaslni\Resources\Point.h"
+#include "F:\DS MiniWaslni\Resources\NodeConverter.h"
 
 class Map{
 
@@ -26,6 +26,7 @@ class Map{
     };
     map<string,Node*>graph;
     map<int,set<int>>convertedGraph;
+    map<int,string> IdToName;
 
     NodeConverter tmp;
 public: 
@@ -40,6 +41,9 @@ public:
 
     map<int,set<int>> getConvertedGraph(){
         return convertedGraph;
+    }
+    map<int,string >getIdToName(){
+        return IdToName;
     }
     map<string,Node*> getGraph(){
         return graph;

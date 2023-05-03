@@ -1,7 +1,6 @@
 #pragma once
 
-#include "C:\Users\amoha\CLionProjects\untitled5\Algos\Algorithm.h"
-
+#include "F:\DS MiniWaslni\Algos\algorithm.h"
 class DFS : public Algorithm{
 private:
     struct InfStruct {
@@ -13,7 +12,7 @@ private:
 public:
     ll run(map<int,set<int>>&convertedGraph,int parID);
     void run(map<int,set<int>>&convertedGraph);
-    void getPath(map<int,set<int>>&convertedGraph);
+    vector<Point> getPath(map<int,set<int>>&convertedGraph);
     DFS(Point src,Point ds){
         this->src = src;
         this->ds = ds;

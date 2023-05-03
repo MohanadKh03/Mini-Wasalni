@@ -2,13 +2,14 @@
 
 #include <iostream>
 #include <vector>
-#include "C:\Users\amoha\CLionProjects\untitled5\Algos\Algorithm.h"
+#include "F:\DS MiniWaslni\Algos\algorithm.h"
 #include "Algos/BFS/BFS.cpp"
 #include "Algos/DFS/DFS.cpp"
 #include "Algos/Dijkstra/Dijkstra.cpp"
 #include "Algos/Floyd/Floyd.cpp"
 #include "Map.cpp"
-#include "C:\Users\amoha\CLionProjects\untitled5\Resources\Point.h"
+#include "F:\DS MiniWaslni\Resources\NodeConverter.h"
+#include "F:\DS MiniWaslni\Resources\Point.h"
 using namespace std;
 
 class Application
@@ -21,7 +22,5 @@ class Application
     Map map;
     Algorithm* algo;
 public:
-    Application();
     void start();
-    ~Application();
 };

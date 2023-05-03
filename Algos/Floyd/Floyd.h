@@ -1,7 +1,6 @@
 #pragma once
 
-#include "C:\Users\amoha\CLionProjects\untitled5\Algos\Algorithm.h"
-
+#include "F:\DS MiniWaslni\Algos\algorithm.h"
 class Floyd : public Algorithm
 {
 private:
@@ -13,7 +12,7 @@ private:
     map<pair<ll,ll>, InfStruct>path;
 public:
     void run(map<int, set<int>> &convertedGraph);
-    void getPath(map<int, set<int>> &convertedGraph);
+    vector<Point> getPath(map<int, set<int>> &convertedGraph);
     void build(map<int, set<int>> &convertedGraph);
     void setPoints(Point src, Point dst);
 };

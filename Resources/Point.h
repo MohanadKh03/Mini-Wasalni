@@ -1,5 +1,5 @@
 #pragma once
-
+#define oo INT32_MAX
 const int limitY = 15;
 
 class Point{

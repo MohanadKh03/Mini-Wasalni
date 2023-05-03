@@ -28,20 +28,24 @@ ll DFS::run(map<int, set<int>> &convertedGraph, int parID) {
     return ret.d;
 }
 
-void DFS::getPath(map<int, set<int>> &convertedGraph) {
+vector<Point> DFS::getPath(map<int, set<int>> &convertedGraph) {
     auto srcID = tmp.axisToId(src.x, src.y, limitY);
     if (dp[srcID].d >= 1e14) {
-        cout << "father mother";
-        return;
+        return{{oo,oo}};
     }
     //
     Point cur = src;
-    cout << "Path: " << dp[srcID].d << "\n";
+    vector<Point>ret;
+    ret.push_back({(int)dp[srcID].d ,oo});
+//    cout << "Path: " << dp[srcID].d << "\n";
     while (!cur.compare(ds)) {
-        cout << "( " << cur.x << " - " << cur.y << " )" << "\n";
+//        cout << "( " << cur.x << " - " << cur.y << " )" << "\n";
+        ret.push_back({cur.x,cur.y});
         ll CurrId=tmp.axisToId(cur.x, cur.y, limitY);
         ll parId=path[CurrId];
         cur = tmp.idToAxis((int)parId,limitY);
     }
-    cout << "( " << ds.x << " - " << ds.y << " )" << "\n";
+    ret.push_back({ds.x,ds.y});
+//    cout << "( " << ds.x << " - " << ds.y << " )" << "\n";
+    return ret;
 }
