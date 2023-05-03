@@ -1,3 +1,0 @@
-F:/DS MiniWaslni/cmake-build-debug/CMakeFiles/DS_MiniWaslni.dir
-F:/DS MiniWaslni/cmake-build-debug/CMakeFiles/edit_cache.dir
-F:/DS MiniWaslni/cmake-build-debug/CMakeFiles/rebuild_cache.dir
