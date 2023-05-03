@@ -3,4 +3,4 @@ project(untitled5)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(untitled5 main.cpp Algos/Algorithm.h)
+add_executable(untitled5 main.cpp cmake-build-debug/include/algorithm.h)
