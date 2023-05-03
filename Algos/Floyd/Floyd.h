@@ -1,7 +1,6 @@
 #pragma once
 
-#include "C:\Users\amoha\Downloads\Compressed\Mini-Wasalni-main\Mini-Wasalni-main\Algos\Algorithm.h"
-
+#include "F:\DS MiniWaslni\Algos\algorithm.h"
 class Floyd : public Algorithm
 {
 private:
