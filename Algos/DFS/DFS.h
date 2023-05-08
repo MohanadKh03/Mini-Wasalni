@@ -1,20 +1,18 @@
 #pragma once
 
-#include "F:\DS MiniWaslni\Algos\algorithm.h"
+#include "../algorithm.h"
 class DFS : public Algorithm{
 private:
-    struct InfStruct {
-        ll d = -1;
-    };
-    Point src, ds;
-    map<ll,ll>path;
-    map<ll, InfStruct>dp;
+    vector<ll>currPath, path;
+    ll ans;
+    map<ll, bool> vis;
 public:
-    ll run(map<int,set<int>>&convertedGraph,int parID);
+    ll run(map<int,set<int>>&convertedGraph,int parID, ll curWeight);
     void run(map<int,set<int>>&convertedGraph);
     vector<Point> getPath(map<int,set<int>>&convertedGraph);
-    DFS(Point src,Point ds){
+    DFS(Point src,Point destination){
         this->src = src;
-        this->ds = ds;
+        this->destination = destination;
+        this->ans=1e18;
     }
 };

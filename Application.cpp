@@ -7,7 +7,7 @@
 void Application::start() {
     int startChoice;
     while (true) {
-        system("CLS");
+        system("clear");
         cout << "Mini-Wasalny\n";
         cout << "------------------------------------------\n";
         cout << "1.Navigate Map\n";
@@ -27,24 +27,35 @@ void Application::start() {
 
 void Application::navigateMenu() {
     int choice;
+    bool firstTime = true;
     do {
-        system("CLS");
-        map.displayMap();
-        cout << "-----------------------------------------\n";
         string city1, city2;
-        cout << "Enter source and destination cities: ";
+        choice = 1;
+        if(firstTime){
+            system("clear");
+            map.displayMap();
+            cout << "-----------------------------------------\n";
+            cout << "Enter source and destination cities: ";
+        } else {
+            cout << "Cities not found in map. Enter correct ones: ";
+        }
         cin >> city1 >> city2;
+        if(map.getGraph()[city1] == NULL || !map.getGraph()[city2]){
+            firstTime = false;
+            continue;
+        }
         algorithmTypes(city1, city2);
         cout << "1.Choose another two cities\n";
         cout << "2.back\n";
         cin >> choice;
+        if(choice == 1) firstTime = true;
     } while (choice == 1);
 }
 
 void Application::editMenu() {
     int choice;
     while (true) {
-        system("CLS");
+        system("clear");
         cout << "1: add city\n";
         cout << "2: delete city\n";
         cout << "3: add edge\n";
@@ -89,7 +100,7 @@ void Application::algorithmTypes(string city1, string city2) {
         cout << "4.Floyd\n";
         cout << "5.back\n";
         cin >> algorithm;
-        system("CLS");
+        system("clear");
         if (algorithm == 5)
             break;
         if (algorithm < 1 || algorithm > 4) {
@@ -126,8 +137,6 @@ void Application::algorithmTypes(string city1, string city2) {
             default:
                 break;
         }
-
-
         if (path.front().x == oo and path.front().y == oo) {
             cout << "there is no path between those destinations\n";
             continue;
@@ -138,8 +147,6 @@ void Application::algorithmTypes(string city1, string city2) {
             auto cityId = NodeConverter().axisToId(path[i].x, path[i].y, limitY);
             cout << IdToName[cityId] << ' ';
             cout << path[i].x << " " << path[i].y << "\n";
-
-
         }
     }
 }
