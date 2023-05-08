@@ -1,25 +1,22 @@
 #pragma once
 
-#include "F:\DS MiniWaslni\Algos\algorithm.h"
+#include "../algorithm.h"
 
 class BFS : public Algorithm
 {
-	struct InfStruct {
-		ll d = 1e18;
-	};
 	struct Vertex
 	{
 		ll ID, onPath=0;
 	};
 	queue<Vertex>q;
-	map<ll, InfStruct>distance;
+	map<ll, ll>distance;
 	map<ll, ll>parent;
 	map<ll,bool>vis;
 
 public:
-    BFS(Point src,Point ds){
+    BFS(Point src,Point destination){
         this->src = src;
-        this->ds = ds;
+        this->destination = destination;
     }
     void run(map<int, set<int>> &convertedGraph);
     vector<Point> getPath(map<int, set<int>> &convertedGraph);

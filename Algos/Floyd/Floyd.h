@@ -1,13 +1,13 @@
 #pragma once
 
-#include "F:\DS MiniWaslni\Algos\algorithm.h"
+#include "../algorithm.h"
 class Floyd : public Algorithm
 {
 private:
     struct InfStruct {
-        ll d = 1e18;
+        ll value = 1e18;
     };
-    Point src, ds;
+    Point src, destination;
     map<pair<int, int>, InfStruct>dp;
     map<pair<ll,ll>, InfStruct>path;
 public:

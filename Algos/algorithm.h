@@ -9,14 +9,14 @@ using namespace std;
 #include <vector>
 #include <map>
 #include <set>
-#include "F:\DS MiniWaslni\Resources\Point.h"
-#include "F:\DS MiniWaslni\Resources\NodeConverter.h"
+#include "../Resources/Point.h"
+#include "../Resources/NodeConverter.h"
 #include <cmath>
 
 class Algorithm{
 protected:
     NodeConverter tmp;
-    Point src,ds;
+    Point src,destination;
     long long dst(Point p1, Point p2) {
         return sqrtl((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));
     }

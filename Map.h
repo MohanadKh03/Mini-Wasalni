@@ -7,8 +7,8 @@
 #include <cmath>
 #include <fstream>
 using namespace std;
-#include "F:\DS MiniWaslni\Resources\Point.h"
-#include "F:\DS MiniWaslni\Resources\NodeConverter.h"
+#include "Resources/Point.h"
+#include "Resources/NodeConverter.h"
 
 class Map{
 

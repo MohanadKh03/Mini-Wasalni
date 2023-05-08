@@ -1,51 +1,37 @@
 #include "DFS.h"
 
 void DFS::run(map<int, set<int>> &convertedGraph) {
-    this->run(convertedGraph,tmp.axisToId(this->src.x,this->src.y,limitY));
+    this->run(convertedGraph,tmp.axisToId(this->src.x,this->src.y,limitY), 0);
 }
 
-ll DFS::run(map<int, set<int>> &convertedGraph, int parID) {
-
-    Point cur = tmp.idToAxis(parID, limitY);
-    //
-    if (cur.compare(ds)) {
-        return 0;
+ll DFS::run(map<int, set<int>> &convertedGraph, int parID, ll curWeight) {
+    ll destinationId = tmp.axisToId(destination.x, destination.y, limitY);
+    currPath.push_back(parID);
+    if(parID==destinationId and curWeight<ans){
+        ans=curWeight;
+        path=currPath;
     }
-    //
-    auto &ret = dp[parID];
-    if (ret.d != -1)return ret.d;
-    //
-    ret.d = 1e14;
-    //
-    for (auto &to: convertedGraph[parID]) {
-        ll cost = this->run(convertedGraph, to) + dst(tmp.idToAxis(parID, limitY), tmp.idToAxis(to, limitY));
-        if (ret.d > cost) {
-            ret.d = cost;
-            path[parID] = to;
-        }
+    for(auto child:convertedGraph[parID])if(!vis[child]){
+        vis[child]=true;
+        ll distance = dst(tmp.idToAxis(parID, limitY), tmp.idToAxis(child, limitY));
+        run(convertedGraph, child, distance+curWeight);
+        vis[child]=false;
     }
-    //
-    return ret.d;
+    currPath.pop_back();
 }
 
 vector<Point> DFS::getPath(map<int, set<int>> &convertedGraph) {
-    auto srcID = tmp.axisToId(src.x, src.y, limitY);
-    if (dp[srcID].d >= 1e14) {
-        return{{oo,oo}};
+    vector<Point> fullPath;
+    if(ans == 1e18){
+        return {{oo, oo}};
     }
-    //
-    Point cur = src;
-    vector<Point>ret;
-    ret.push_back({(int)dp[srcID].d ,oo});
-//    cout << "Path: " << dp[srcID].d << "\n";
-    while (!cur.compare(ds)) {
-//        cout << "( " << cur.x << " - " << cur.y << " )" << "\n";
-        ret.push_back({cur.x,cur.y});
-        ll CurrId=tmp.axisToId(cur.x, cur.y, limitY);
-        ll parId=path[CurrId];
-        cur = tmp.idToAxis((int)parId,limitY);
+    ll distance = 0;
+    for(int i = 0; i < path.size() - 1; i++){
+        distance += dst(tmp.idToAxis(path[i], limitY), tmp.idToAxis(path[i + 1], limitY));
     }
-    ret.push_back({ds.x,ds.y});
-//    cout << "( " << ds.x << " - " << ds.y << " )" << "\n";
-    return ret;
+    fullPath.push_back({(int)distance, oo});
+    for(auto i : path){
+        fullPath.push_back(tmp.idToAxis(i, limitY));
+    }
+    return fullPath;
 }

@@ -1,15 +1,20 @@
 #include "Floyd.h"
-void Floyd::setPoints(Point source, Point dst) {
+void Floyd::setPoints(Point source, Point dst)
+{
     this->src = source;
-    this->ds = dst;
+    this->destination = dst;
 }
 void Floyd::run(map<int, set<int>> &convertedGraph)
 {
-    for (auto& it : convertedGraph) {
-        for (auto& i : convertedGraph) {
-            for (auto& j : convertedGraph) {
-                if (dp[{i.first, j.first}].d > dp[{i.first, it.first}].d + dp[{it.first, j.first}].d) {
-                    dp[{i.first, j.first}].d = dp[{i.first, it.first}].d + dp[{it.first, j.first}].d;
+    for (auto &it : convertedGraph)
+    {
+        for (auto &i : convertedGraph)
+        {
+            for (auto &j : convertedGraph)
+            {
+                if (dp[{i.first, j.first}].value > dp[{i.first, it.first}].value + dp[{it.first, j.first}].value)
+                {
+                    dp[{i.first, j.first}].value = dp[{i.first, it.first}].value + dp[{it.first, j.first}].value;
                     path[{i.first, j.first}] = path[{i.first, it.first}];
                 }
             }
@@ -18,32 +23,34 @@ void Floyd::run(map<int, set<int>> &convertedGraph)
 }
 vector<Point> Floyd::getPath(map<int, set<int>> &convertedGraph)
 {
-    vector<Point>ret;
+    vector<Point> finalPath;
 
-    int u = tmp.axisToId(src.x,src.y,limitY), v = tmp.axisToId(ds.x, ds.y,limitY);
-    if (dp[{u, v}].d == 1e18) {
-        return{{oo,oo}};
+    int srcId = tmp.axisToId(src.x, src.y, limitY), destId = tmp.axisToId(destination.x, destination.y, limitY);
+    if (dp[{srcId, destId}].value == 1e18)
+    {
+        return {{oo, oo}};
     }
-//    cout << "Path: " << dp[{u, v}].d << "\n";
-    ret.push_back({(int)dp[{u, v}].d,oo});
-    vector<ll>vv = { u };
-    while (u!=v) {
-        u =(int)path[{u,v}].d;
-        vv.push_back(u);
+    finalPath.push_back({(int)dp[{srcId, destId}].value, oo});
+    vector<ll> pathWithId = {srcId};
+    while (srcId != destId)
+    {
+        srcId = (int)path[{srcId, destId}].value;
+        pathWithId.push_back(srcId);
     }
-    for (auto& it : vv) {
-        Point currPoint = tmp.idToAxis((int)it,limitY);
-//        cout << "( " << currPoint.x << " - " << currPoint.y << " )" << "\n";
-        ret.push_back({currPoint.x,currPoint.y});
+    for (auto &it : pathWithId)
+    {
+        Point currPoint = tmp.idToAxis((int)it, limitY);
+        finalPath.push_back({currPoint.x, currPoint.y});
     }
-    return ret;
+    return finalPath;
 }
-void Floyd::build(map<int, set<int>>& graph) {
-    for (auto& i : graph) {
-        for (auto& j : i.second) {
-            ll tmpDist = dst(tmp.idToAxis(i.first,limitY), tmp.idToAxis(j,limitY));
-            dp[{i.first, j}].d = tmpDist;
-            path[{i.first, j}].d = j;
+void Floyd::build(map<int, set<int>> &graph)
+{
+    for (auto &i : graph){
+        for (auto &j : i.second){
+            ll tmpDist = dst(tmp.idToAxis(i.first, limitY), tmp.idToAxis(j, limitY));
+            dp[{i.first, j}].value = tmpDist;
+            path[{i.first, j}].value = j;
         }
     }
 }
