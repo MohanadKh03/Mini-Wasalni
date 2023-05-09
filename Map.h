@@ -25,10 +25,11 @@ class Map{
         map<string, int> edges; // {to , distance }
     };
     map<string,Node*>graph;
+    
+    //used for the algorithms to work on single numbers instead of the whole node
     map<int,set<int>>convertedGraph;
     map<int,string> IdToName;
 
-    NodeConverter tmp;
 public: 
     Map();
 

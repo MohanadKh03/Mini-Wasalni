@@ -25,7 +25,7 @@ vector<Point> Floyd::getPath(map<int, set<int>> &convertedGraph)
 {
     vector<Point> finalPath;
 
-    int srcId = tmp.axisToId(src.x, src.y, limitY), destId = tmp.axisToId(destination.x, destination.y, limitY);
+    int srcId = NodeConverter::axisToId(src.x, src.y, limitY), destId = NodeConverter::axisToId(destination.x, destination.y, limitY);
     if (dp[{srcId, destId}].value == 1e18)
     {
         return {{oo, oo}};
@@ -39,7 +39,7 @@ vector<Point> Floyd::getPath(map<int, set<int>> &convertedGraph)
     }
     for (auto &it : pathWithId)
     {
-        Point currPoint = tmp.idToAxis((int)it, limitY);
+        Point currPoint = NodeConverter::idToAxis((int)it, limitY);
         finalPath.push_back({currPoint.x, currPoint.y});
     }
     return finalPath;
@@ -48,7 +48,7 @@ void Floyd::build(map<int, set<int>> &graph)
 {
     for (auto &i : graph){
         for (auto &j : i.second){
-            ll tmpDist = dst(tmp.idToAxis(i.first, limitY), tmp.idToAxis(j, limitY));
+            ll tmpDist = Algorithm::dst(NodeConverter::idToAxis(i.first, limitY), NodeConverter::idToAxis(j, limitY));
             dp[{i.first, j}].value = tmpDist;
             path[{i.first, j}].value = j;
         }

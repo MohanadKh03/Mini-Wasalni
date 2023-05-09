@@ -9,23 +9,21 @@ Map::Map() {
         Node *newCity = new Node(name, x, y);
         graph[name] = newCity;
 
-        int id = tmp.axisToId(x, y, limitY);
+        int id = NodeConverter::axisToId(x, y, limitY);
         newCity->id = id;
 
         convertedGraph[id];
         IdToName[id] = name;
     }
     while (edgesFile >> name >> size) {
-        int id = tmp.axisToId(graph[name]->point.x, graph[name]->point.y, limitY);
+        int id = NodeConverter::axisToId(graph[name]->point.x, graph[name]->point.y, limitY);
         for (int i = 0; i < size; ++i) {
             edgesFile >> neighborName >> weight;
-            int neighourId = tmp.axisToId(graph[neighborName]->point.x, graph[neighborName]->point.y, limitY);
-
-            convertedGraph[id].insert(neighourId);
-            convertedGraph[neighourId].insert(id);
+            int neighourId = NodeConverter::axisToId(graph[neighborName]->point.x, graph[neighborName]->point.y, limitY);
 
             graph[name]->edges[neighborName] = weight;
-            graph[neighborName]->edges[name] = weight;
+            convertedGraph[id].insert(neighourId);
+
         }
     }
 }
@@ -36,13 +34,13 @@ void Map::addCity() {
     cout << "Enter city name , position(x,y)\n";
     cin >> city >> x >> y;
     if (graph[city]) {
-        cout << "city already exists \n";
+        cout << "City already exists \n";
         return;
     }
     Node *newNode = new Node(city, x, y);
     graph[city] = newNode;
 
-    int id = tmp.axisToId(graph[city]->point.x, graph[city]->point.y, limitY);
+    int id = NodeConverter::axisToId(graph[city]->point.x, graph[city]->point.y, limitY);
     newNode->id = id;
 
     convertedGraph[id];
@@ -54,16 +52,18 @@ void Map::deleteCity() {
     cout << "Enter city \t";
     cin >> city;
     if (!graph[city]) {
-        cout << "city doesn't exist mother father\n";
+        cout << "City doesn't exist \n";
         return;
     }
+    //deleting all edges that go to our city
     for (auto &edge: graph[city]->edges) {
         graph[edge.first]->edges.erase(city);
     }
+
     graph.erase(city);
 
-    int id = tmp.axisToId(graph[city]->point.x, graph[city]->point.y, limitY);
-    //
+    int id = NodeConverter::axisToId(graph[city]->point.x, graph[city]->point.y, limitY);
+    
     for (auto it: convertedGraph[id]) {
         convertedGraph[it].erase(id);
     }
@@ -76,48 +76,53 @@ void Map::deleteCity() {
 void Map::addEdge() {
     string city1, city2;
     bool isDirected;
-    cout << "Enter city1,city2 names\n";
+    cout << "Enter city1(from),city2(to) names\n";
     cin >> city1 >> city2;
     if (!graph[city1] || !graph[city2]) {
         cout << "City does not exist\n";
         return;
     }
+    do{
+        cout << "Directed or Undirected ?(1,0): ";
+        cin >> isDirected;
+    }while(isDirected != 1);
     int distance = (int) sqrt(pow((graph[city1]->point.x - graph[city2]->point.x), 2) +
                               pow((graph[city1]->point.y - graph[city2]->point.y), 2));
     graph[city1]->edges[city2] = distance;
-    graph[city2]->edges[city1] = distance;
-
+    if(isDirected)
+        graph[city2]->edges[city1] = distance;
 
     //Converter
-    int id1 = tmp.axisToId(graph[city1]->point.x, graph[city1]->point.y, limitY);
-    int id2 = tmp.axisToId(graph[city2]->point.x, graph[city2]->point.y, limitY);
+    int id1 = NodeConverter::axisToId(graph[city1]->point.x, graph[city1]->point.y, limitY);
+    int id2 = NodeConverter::axisToId(graph[city2]->point.x, graph[city2]->point.y, limitY);
     //
     convertedGraph[id1].insert(id2); //
     ///./////
-    convertedGraph[id2].insert(id1); //
+    if(isDirected)
+        convertedGraph[id2].insert(id1); //
 
 }
 
+
+//Deleting edge FROM and TO .. cant delete both ways at once .. if undirected you must call it two times
 void Map::deleteEdge() {
-    cout << "Enter cities name \n";
+    cout << "Enter cities name(from,to) \n";
     string city1, city2;
     cin >> city1 >> city2;
     if (!graph[city1] || !graph[city2]) {
         cout << "one of cities doesn't exist\n";
         return;
     }
-    //delete both ways cuz undirected
-    graph[city1]->edges.erase(city2);
-    graph[city2]->edges.erase(city1);
 
-    int id1 = tmp.axisToId(graph[city1]->point.x, graph[city1]->point.y, limitY);
-    int id2 = tmp.axisToId(graph[city2]->point.x, graph[city2]->point.y, limitY);
-    //
-    if (convertedGraph[id1].find(id2) != convertedGraph[id1].end()) {
+    int id1 = NodeConverter::axisToId(graph[city1]->point.x, graph[city1]->point.y, limitY);
+    int id2 = NodeConverter::axisToId(graph[city2]->point.x, graph[city2]->point.y, limitY);
+
+    if(graph[city1]->edges.find(city2) != graph[city1]->edges.end()){
+        graph[city1]->edges.erase(city2);
         convertedGraph[id1].erase(id2);
-        convertedGraph[id2].erase(id1);
     }
-
+    else
+        cout << "No edge from " << city1 << " to " << city2 << endl;
 }
 
 void Map::displayMap() {

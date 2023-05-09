@@ -55,7 +55,6 @@ void Application::navigateMenu() {
 void Application::editMenu() {
     int choice;
     while (true) {
-        system("clear");
         cout << "1: add city\n";
         cout << "2: delete city\n";
         cout << "3: add edge\n";
@@ -63,6 +62,7 @@ void Application::editMenu() {
         cout << "5: display map\n";
         cout << "6: exit\n";
         cin >> choice;
+        system("clear");
         if (choice == 1)
             map.addCity();
         else if (choice == 2)
@@ -85,13 +85,19 @@ void Application::algorithmTypes(string city1, string city2) {
         cout << "0\n";
         return;
     }
-    int algorithm;
-    std::map<int, set<int>> convertedGraph = map.getConvertedGraph();
-    std::map<int, string> IdToName = map.getIdToName();
+    //get all the graphs info 
+    auto convertedGraph = map.getConvertedGraph();
+    auto IdToName = map.getIdToName();
     auto graph = map.getGraph();
+
+    //floyd is a special algorithm so we need to build it and run it first in order to 
+    //use it to its full capacity and get the result later and not compute it every time cuz it runs in
+    //O(n^3)
     Floyd *floyd = new Floyd();
     floyd->build(convertedGraph);
     floyd->run(convertedGraph);
+
+    int algorithm;
     while (true) {
         vector<Point> path;
         cout << "1.BFS\n";
@@ -144,7 +150,7 @@ void Application::algorithmTypes(string city1, string city2) {
 
         cout << "path cost is : " << path.front().x << "\n";
         for (int i = 1; i < path.size(); ++i) {
-            auto cityId = NodeConverter().axisToId(path[i].x, path[i].y, limitY);
+            auto cityId = NodeConverter::axisToId(path[i].x, path[i].y, limitY);
             cout << IdToName[cityId] << ' ';
             cout << path[i].x << " " << path[i].y << "\n";
         }
