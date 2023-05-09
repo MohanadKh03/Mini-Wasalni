@@ -37,7 +37,7 @@ vector<Point> DFS::getPath(map<int, set<int>> &convertedGraph) {
     }
     ll distance = 0;
     for(int i = 0; i < path.size() - 1; i++){
-        distance += dst(tmp.idToAxis(path[i], limitY), tmp.idToAxis(path[i + 1], limitY));
+        distance += dst(NodeConverter::idToAxis(path[i], limitY), NodeConverter::idToAxis(path[i + 1], limitY));
     }
     fullPath.push_back({(int)distance, oo});
     for(auto i : path){
