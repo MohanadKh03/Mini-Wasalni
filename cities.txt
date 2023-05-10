@@ -1,6 +1,8 @@
-Mo'men 2 2
-Mohab 5 6
-Mohanad 3 4
-RealMadrid 10 10
-Tasneem 7 7
-a 1 1
+Mo'men 150 150
+Mohab 400 300
+Mohanad 320 200
+RealMadrid 350 500
+Tasneem 150 300
+a 200 200
+jackop 150 250
+urqt 200 250

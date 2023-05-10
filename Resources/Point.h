@@ -1,6 +1,6 @@
 #pragma once
 #define oo INT32_MAX
-const int limitY = 15;
+const int limitY = 650;
 
 class Point{
 public:
