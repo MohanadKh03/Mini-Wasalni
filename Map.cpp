@@ -48,6 +48,7 @@ void Map::addCity() {
 }
 
 void Map::deleteCity() {
+    displayMap();
     string city;
     cout << "Enter city \t";
     cin >> city;
@@ -59,10 +60,13 @@ void Map::deleteCity() {
     for (auto &edge: graph[city]->edges) {
         graph[edge.first]->edges.erase(city);
     }
+    for(auto &cityNode : graph){
+        cityNode.second->edges.erase(city);
+    }
+    int id = NodeConverter::axisToId(graph[city]->point.x, graph[city]->point.y, limitY);
 
     graph.erase(city);
 
-    int id = NodeConverter::axisToId(graph[city]->point.x, graph[city]->point.y, limitY);
     
     for (auto it: convertedGraph[id]) {
         convertedGraph[it].erase(id);
@@ -74,6 +78,7 @@ void Map::deleteCity() {
 }
 
 void Map::addEdge() {
+    displayMap();
     string city1, city2;
     bool isDirected;
     cout << "Enter city1(from),city2(to) names\n";
@@ -89,7 +94,7 @@ void Map::addEdge() {
     int distance = (int) sqrt(pow((graph[city1]->point.x - graph[city2]->point.x), 2) +
                               pow((graph[city1]->point.y - graph[city2]->point.y), 2));
     graph[city1]->edges[city2] = distance;
-    if(isDirected)
+    if(!isDirected)
         graph[city2]->edges[city1] = distance;
 
     //Converter
@@ -98,7 +103,7 @@ void Map::addEdge() {
     //
     convertedGraph[id1].insert(id2); //
     ///./////
-    if(isDirected)
+    if(!isDirected)
         convertedGraph[id2].insert(id1); //
 
 }
@@ -106,6 +111,7 @@ void Map::addEdge() {
 
 //Deleting edge FROM and TO .. cant delete both ways at once .. if undirected you must call it two times
 void Map::deleteEdge() {
+    displayMap();
     cout << "Enter cities name(from,to) \n";
     string city1, city2;
     cin >> city1 >> city2;
@@ -132,15 +138,6 @@ void Map::displayMap() {
             cout << edge.first << " " << edge.second << endl;
         cout << "------------------------------------------------------------------------------\n";
     }
-    cout << "CONVERTED: \n";
-    for (auto &i: convertedGraph) {
-        cout << "[ " << i.first << " ]: ";
-        for (auto &j: i.second) {
-            cout << j << ", ";
-        }
-        cout << "\n";
-    }
-    cout << "END CONVERTED: \n";
 }
 
 void Map::deleteMap() {

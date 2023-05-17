@@ -1,13 +1,14 @@
-Mo'men 2
-Mohanad 2
-Tasneem 7
+Mo'men 4
 Mohab 3
 Mohanad 2
-RealMadrid 6
-Tasneem 2
-Mohanad 2
+RealMadrid 4
+Tasneem 7
+Mohab 0
+Mohanad 4
 Mo'men 2
 Mohab 2
+RealMadrid 6
+Tasneem 2
 RealMadrid 2
 Mohab 6
 Tasneem 4
@@ -16,5 +17,3 @@ Mo'men 7
 Mohab 2
 RealMadrid 4
 a 0
-jackop 0
-urqt 0

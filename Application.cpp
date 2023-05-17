@@ -59,10 +59,10 @@ void Application::editMenu() {
         cout << "2: delete city\n";
         cout << "3: add edge\n";
         cout << "4: delete edge\n";
-        cout << "5: display map\n";
-        cout << "6: exit\n";
+        cout << "5: exit\n";
         cin >> choice;
         system("clear");
+        map.displayMap();
         if (choice == 1)
             map.addCity();
         else if (choice == 2)
@@ -72,11 +72,9 @@ void Application::editMenu() {
         else if (choice == 4)
             map.deleteEdge();
         else if (choice == 5)
-            map.displayMap();
-        else if (choice == 6)
             break;
         else
-            cout << "Enter a valid number(1:6)\n";
+            cout << "Enter a valid number(1:5)\n";
     }
 }
 
