@@ -33,6 +33,12 @@ void Map::addCity() {
     int x, y;
     cout << "Enter city name , position(x,y)\n";
     cin >> city >> x >> y;
+    for(auto& node : graph){
+        if(node.second->point.x == x && node.second->point.y == y){
+            cout << "City coordinates already exist \n";
+            return;
+        }
+    }
     if (graph[city]) {
         cout << "City already exists \n";
         return;
