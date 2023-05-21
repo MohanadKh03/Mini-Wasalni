@@ -63,9 +63,9 @@ void Map::deleteCity() {
         return;
     }
     //deleting all edges that go to our city
-    for (auto &edge: graph[city]->edges) {
-        graph[edge.first]->edges.erase(city);
-    }
+    // for (auto &edge: graph[city]->edges) {
+    //     graph[edge.first]->edges.erase(city);
+    // }
     for(auto &cityNode : graph){
         cityNode.second->edges.erase(city);
     }
@@ -74,8 +74,8 @@ void Map::deleteCity() {
     graph.erase(city);
 
     
-    for (auto it: convertedGraph[id]) {
-        convertedGraph[it].erase(id);
+    for (auto it: convertedGraph) {
+        convertedGraph.erase(id);
     }
     convertedGraph[id].clear();
     convertedGraph.erase(id);
@@ -96,7 +96,7 @@ void Map::addEdge() {
     do{
         cout << "Directed or Undirected ?(1,0): ";
         cin >> isDirected;
-    }while(isDirected != 1);
+    }while(isDirected != 1 && isDirected != 0);
     int distance = (int) sqrt(pow((graph[city1]->point.x - graph[city2]->point.x), 2) +
                               pow((graph[city1]->point.y - graph[city2]->point.y), 2));
     graph[city1]->edges[city2] = distance;
